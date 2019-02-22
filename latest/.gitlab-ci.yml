@@ -6,7 +6,7 @@ services:
 
 variables:
     APP_NAME: "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
-    MYSQL_DATABASE: avangard
+    MYSQL_DATABASE: database_name
     MYSQL_ROOT_PASSWORD: secret
     GITLAB_HOST: 123.123.123.123
     GITLAB_PORT: "22"
