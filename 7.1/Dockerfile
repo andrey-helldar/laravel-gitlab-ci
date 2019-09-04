@@ -8,6 +8,6 @@ USER root
 # PHP REDIS EXTENSION
 ###########################################################################
 
-RUN apt-get update -yqq && \
-    apt-get install -yqq php-redis && \
-    docker-php-ext-enable redis
+RUN apk add --update redis autoconf \
+	&& pecl install -o -f redis \
+	&&  rm -rf /tmp/pear
