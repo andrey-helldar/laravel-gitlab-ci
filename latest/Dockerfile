@@ -8,6 +8,5 @@ USER root
 # PHP REDIS EXTENSION
 ###########################################################################
 
-RUN apt-get update -yqq && \
-    apt-get install -yqq php-redis && \
+RUN apk add --update php-redis && 
     docker-php-ext-enable redis
