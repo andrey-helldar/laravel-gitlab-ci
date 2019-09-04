@@ -1,4 +1,4 @@
-image: lorisleiva/laravel-docker:7.1
+image: helldar/laravel-gitlab-ci:7.1
 
 services:
     - mysql:5.7
