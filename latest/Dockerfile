@@ -8,4 +8,6 @@ USER root
 # PHP REDIS EXTENSION
 ###########################################################################
 
-RUN apk add --update php-redis
+RUN apk add --update redis autoconf \
+	&& pecl install -o -f redis \
+	&&  rm -rf /tmp/pear
