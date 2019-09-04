@@ -28,6 +28,9 @@ variables:
     find . -type f -not -path "./vendor/*" -exec chmod 664 {} \;
     find . -type d -not -path "./vendor/*" -exec chmod 775 {} \;
 
+.install_phpredis: &install_phpredis |
+    docker-php-ext-enable redis
+
 
 composer:
     stage: build
@@ -36,6 +39,7 @@ composer:
         paths:
             - vendor/
     script:
+        - *install_phpredis
         - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
         - cp .env.testing .env
         - php artisan key:generate
@@ -75,5 +79,6 @@ production:
         - release
     script:
         - *init_ssh
+        - *install_phpredis
         - *change_file_permissions
         - php artisan deploy -vvv --revision=$CI_COMMIT_SHA
