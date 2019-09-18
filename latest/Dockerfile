@@ -10,7 +10,7 @@ USER root
 
 RUN apk add --update redis autoconf \
 	&& pecl install -o -f redis \
-	&&  rm -rf /tmp/pear
+	&& rm -rf /tmp/pear
 
 
 # php-soap extension
