@@ -9,5 +9,5 @@ USER root
 ###########################################################################
 
 RUN apk add --update redis autoconf \
-	&& pecl install -o -f redis \
+	&& pecl install -o -f redis soap \
 	&&  rm -rf /tmp/pear
