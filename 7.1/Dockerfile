@@ -8,8 +8,15 @@ USER root
 # PHP EXTENSIONS
 ###########################################################################
 
+RUN apk add libxml2-dev
+
 RUN apk add --update redis autoconf \
 	&& pecl install -o -f redis \
 	&& rm -rf /tmp/pear
 
-RUN apt-get install php-soap
+
+# php-soap extension
+RUN apk add --update php-soap
+
+RUN docker-php-ext-install \
+    soap
