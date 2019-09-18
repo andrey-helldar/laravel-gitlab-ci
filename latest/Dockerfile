@@ -8,6 +8,8 @@ USER root
 # PHP EXTENSIONS
 ###########################################################################
 
+RUN apk add libxml2-dev
+
 RUN apk add --update redis autoconf \
 	&& pecl install -o -f redis \
 	&& rm -rf /tmp/pear
