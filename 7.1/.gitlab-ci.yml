@@ -40,6 +40,7 @@ composer:
         paths:
             - vendor/
     script:
+        - *init_ssh
         - *install_php_extensions
         - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
         - cp .env.testing .env
@@ -79,7 +80,5 @@ production:
     only:
         - release
     script:
-        - *init_ssh
-        - *install_php_extensions
         - *change_file_permissions
         - php artisan deploy -vvv --revision=$CI_COMMIT_SHA
