@@ -1,25 +1,19 @@
-FROM php:alpine
-
-
 ###############################################
-# Install nodejs
+# Install nodejs and yarn
 ###############################################
 
-RUN apk add curl gnupg \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash \
-    && apk add nodejs
+FROM node:latest
 
-
-###############################################
-# Install yarn
-###############################################
-
-RUN apk add --no-cache yarn
+RUN node -v
+RUN yarn -v
 
 
 ###############################################
 # Other
 ###############################################
+
+FROM php:alpine
+
 
 # Install dev dependencies
 RUN apk add --no-cache --virtual .build-deps \
