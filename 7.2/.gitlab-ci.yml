@@ -3,6 +3,7 @@ image: helldar/laravel-gitlab-ci:7.2
 services:
     - mysql:5.7
     - redis:latest
+    - node:latest
 
 variables:
     APP_NAME: "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
