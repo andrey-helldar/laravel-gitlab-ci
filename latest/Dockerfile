@@ -1,3 +1,7 @@
+# install nodejs and yarn
+FROM node:latest
+
+# install php-alpine
 FROM php:alpine
 
 # Install dev dependencies
