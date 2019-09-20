@@ -1,5 +1,6 @@
 FROM php:alpine
 
+
 # Install dev dependencies
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
@@ -26,12 +27,20 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
-    libzip-dev
+    libzip-dev \
+    software-properties-common
 
+############################
 # Install NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apk add --no-cache \
-    nodejs
+############################
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apk add nodejs
+
+
+############################
+# Other installations
+############################
 
 # Install PECL and PEAR extensions
 RUN pecl install \
