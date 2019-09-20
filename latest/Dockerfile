@@ -1,8 +1,8 @@
+FROM php:alpine
+
 ########################################
 # Install nodejs and yarn
 ########################################
-
-FROM alpine:latest
 
 ENV NODE_VERSION 12.10.0
 ENV YARN_VERSION 1.17.3
@@ -87,6 +87,9 @@ CMD [ "node" ]
 
 FROM php:alpine
 
+RUN php -v \
+    && node -v \
+    && yarn -v
 
 # Install dev dependencies
 RUN apk add --no-cache --virtual .build-deps \
