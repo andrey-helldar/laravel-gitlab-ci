@@ -29,7 +29,7 @@ RUN apk add --no-cache \
     libzip-dev
 
 # Install NodeJS
-RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apk add --no-cache \
     nodejs
 
