@@ -8,6 +8,5 @@ This is a modification of the [lorisleiva/laravel-docker](https://github.com/lor
 
 
 ### Modified:
-* The installed versions of `nodejs` and `yarn` are replaced with the latest ones. By default, versions nodejs 10.x and yarn 1.16.x were installed.
-* Added installation of php-soap extension.
-* Added installation of php-redis extension.
+* The installed versions of `nodejs` and `yarn` are replaced with the latest ones. By default, versions [nodejs 10.x](https://pkgs.alpinelinux.org/packages?name=nodejs&branch=v3.10) and [yarn 1.16.x](https://pkgs.alpinelinux.org/packages?name=yarn&branch=v3.10) were installed.
+* PHP extensions see in [Dockerfile](latest/Dockerfile) file.
