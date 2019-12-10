@@ -1,22 +1,89 @@
-FROM lorisleiva/laravel-docker:latest
-
-# Start as root
-USER root
-
+FROM php:alpine
 
 ###########################################################################
-# PHP EXTENSIONS
+# Install dev dependencies
 ###########################################################################
+RUN apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS \
+    curl-dev \
+    imagemagick-dev \
+    libtool \
+    libxml2-dev \
+    postgresql-dev \
+    sqlite-dev \
+    oniguruma-dev
 
-RUN apk add libxml2-dev
+###########################################################################
+# Install production dependencies
+###########################################################################
+RUN apk add --no-cache \
+    bash \
+    curl \
+    g++ \
+    gcc \
+    git \
+    imagemagick \
+    libc-dev \
+    libpng-dev \
+    make \
+    mysql-client \
+    nodejs \
+    nodejs-npm \
+    yarn \
+    openssh-client \
+    postgresql-libs \
+    rsync \
+    zlib-dev \
+    libzip-dev
 
-RUN apk add --update redis autoconf \
-	&& pecl install -o -f redis \
-	&& rm -rf /tmp/pear
+###########################################################################
+# Install PECL and PEAR extensions
+###########################################################################
+RUN pecl install \
+    imagick \
+    xdebug \
+    redis
 
+###########################################################################
+# Install and enable php extensions
+###########################################################################
+RUN docker-php-ext-enable \
+    imagick \
+    xdebug \
+    redis
 
-# php-soap extension
-RUN apk add --update php-soap
+RUN docker-php-ext-configure zip --with-libzip
 
 RUN docker-php-ext-install \
-    soap
+    calendar \
+    curl \
+    exif \
+    iconv \
+    mbstring \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    pdo_sqlite \
+    pcntl \
+    tokenizer \
+    xml \
+    gd \
+    zip \
+    bcmath \
+    soap \
+    sockets
+
+# Install composer
+ENV COMPOSER_HOME /composer
+ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
+ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+
+# Install PHP_CodeSniffer
+RUN composer global require "squizlabs/php_codesniffer=*" "hirak/prestissimo" --no-scripts
+
+# Cleanup dev dependencies
+RUN apk del -f .build-deps
+
+# Setup working directory
+WORKDIR /var/www
