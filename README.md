@@ -1,4 +1,4 @@
-# Laravel Gitlab CI rules
+# Deploying Docker container (with Gitlab CI and other)
 
 🐳 Generic docker image for Laravel Applications
 
