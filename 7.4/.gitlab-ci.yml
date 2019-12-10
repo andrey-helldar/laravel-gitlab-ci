@@ -2,7 +2,6 @@ image: helldar/laravel-gitlab-ci:7.4
 
 services:
     - mysql:5.7
-    - redis:latest
 
 variables:
     APP_NAME: "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
@@ -31,14 +30,17 @@ variables:
 
 composer:
     stage: build
+    only:
+        - master
+        - release
     cache:
-        key: ${CI_COMMIT_REF_SLUG}-composer
+        key: ${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}-composer
         paths:
             - vendor/
     script:
         - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
         - cp .env.testing .env
-        - php artisan key:generate
+        - php artisan key:generate -vvv
     artifacts:
         expire_in: 1 month
         paths:
@@ -47,27 +49,33 @@ composer:
 
 yarn:
     stage: build
+    only:
+        - master
+        - release
     cache:
-        key: ${CI_COMMIT_REF_SLUG}-yarn
+        key: ${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}-yarn
         paths:
             - node_modules/
     script:
         - yarn install --network-timeout=500000
         - yarn production
     artifacts:
-        expire_in: 1 month
+        expire_in: 1 week
         paths:
             - node_modules/
             - public/mix-manifest.json
 
 phpunit:
     stage: test
+    only:
+        - master
+        - release
     dependencies:
         - composer
         - yarn
     script:
-        - php artisan migrate --force
-        - phpunit
+        - php artisan migrate:fresh --seed --force -vvv
+        - phpunit --no-coverage -v
 
 production:
     stage: deploy
