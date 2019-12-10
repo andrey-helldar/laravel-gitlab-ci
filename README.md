@@ -1,12 +1,12 @@
 # Laravel Gitlab CI rules
 
-This is a modification of the [lorisleiva/laravel-docker](https://github.com/lorisleiva/laravel-docker) container.
+🐳 Generic docker image for Laravel Applications
 
-### Supported tags and respective `Dockerfile` links
-* [7.4](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/master/7.4/Dockerfile), [latest](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/master/latest/Dockerfile)
-* [7.3](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/master/7.3/Dockerfile)
+[![Docker Badge](https://img.shields.io/docker/pulls/helldar/laravel-gitlab-ci)](https://hub.docker.com/r/helldar/laravel-gitlab-ci/)
 
-
-### Modified:
-* The installed versions of `nodejs` and `yarn` are replaced with the latest ones. By default, versions [nodejs 10.x](https://pkgs.alpinelinux.org/packages?name=nodejs&branch=v3.10) and [yarn 1.16.x](https://pkgs.alpinelinux.org/packages?name=yarn&branch=v3.10) were installed.
-* PHP extensions see in [Dockerfile](latest/Dockerfile) file.
+| Tag | PHP version | Features |
+| - | - | - |
+| 7.3 | 7.3 | ✅ Everything |
+| 7.4 | 7.4 | ✅ Everything |
+| stable | **7.4** | 🔗 Aliases the latest version of PHP that supports all features of this docker image.  |
+| latest | **7.4** | 🔗 Aliases the latest version of PHP available (even if that version does not support all features yet). |
