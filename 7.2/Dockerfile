@@ -20,3 +20,8 @@ RUN apk add --update php-soap
 
 RUN docker-php-ext-install \
     soap
+
+# php extensions
+RUN docker-php-ext-install \
+    sockets
+
