@@ -29,7 +29,7 @@ variables:
     find . -type d -not -path "./vendor/*" -exec chmod 775 {} \;
 
 .install_php_extensions: &install_php_extensions |
-    docker-php-ext-enable redis soap
+    docker-php-ext-enable redis soap sockets
 
 
 composer:
