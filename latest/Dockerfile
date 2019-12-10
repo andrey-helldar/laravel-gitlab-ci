@@ -52,7 +52,7 @@ RUN docker-php-ext-enable \
     xdebug \
     redis
 
-RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-install \
     calendar \
