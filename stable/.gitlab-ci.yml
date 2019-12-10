@@ -42,7 +42,7 @@ composer:
         - cp .env.testing .env
         - php artisan key:generate -vvv
     artifacts:
-        expire_in: 1 month
+        expire_in: 1 week
         paths:
             - vendor/
             - .env
