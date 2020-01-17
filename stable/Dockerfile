@@ -55,24 +55,24 @@ RUN docker-php-ext-enable \
 RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-install \
+    bcmath \
     calendar \
     curl \
     exif \
+    gd \
     iconv \
+    json \
     mbstring \
+    pcntl \
     pdo \
     pdo_mysql \
     pdo_pgsql \
     pdo_sqlite \
-    pcntl \
-    tokenizer \
-    xml \
-    gd \
-    zip \
-    bcmath \
     soap \
     sockets \
-    json
+    tokenizer \
+    xml \
+    zip
 
 # Install composer
 ENV COMPOSER_HOME /composer
