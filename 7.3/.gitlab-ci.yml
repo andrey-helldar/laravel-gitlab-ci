@@ -39,6 +39,7 @@ composer:
         paths:
             - vendor/
     script:
+        - *init_ssh
         - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
         - cp .env.testing .env
         - php artisan key:generate -vvv
