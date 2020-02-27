@@ -86,5 +86,8 @@ RUN composer global require "squizlabs/php_codesniffer=*" "hirak/prestissimo" --
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
 
+# Show PHP version
+RUN php -v
+
 # Setup working directory
 WORKDIR /var/www
