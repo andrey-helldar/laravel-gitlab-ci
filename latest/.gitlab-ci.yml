@@ -28,6 +28,9 @@ variables:
     find . -type f -not -path "./vendor/*" -exec chmod 664 {}
     find . -type d -not -path "./vendor/*" -exec chmod 775 {}
 
+.php_version: &php_version |
+    php -v
+
 
 composer:
     stage: build
@@ -40,6 +43,7 @@ composer:
             - vendor/
     script:
         - *init_ssh
+        - *php_version
         - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
         - cp .env.testing .env
         - php artisan key:generate -vvv
