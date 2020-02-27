@@ -6,6 +6,7 @@
 
 | Tag | PHP version | Features |
 | - | - | - |
+| 7.2 | 7.2 | ✅ Everything |
 | 7.3 | 7.3 | ✅ Everything |
 | 7.4 | 7.4 | ✅ Everything |
 | stable | **7.4** | 🔗 Aliases the latest version of PHP that supports all features of this docker image.  |
