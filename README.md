@@ -11,3 +11,4 @@
 | 7.4 | 7.4 | ✅ Everything |
 | stable | **7.4** | 🔗 Aliases the latest version of PHP that supports all features of this docker image.  |
 | latest | **7.4** | 🔗 Aliases the latest version of PHP available (even if that version does not support all features yet). |
+| dev | **7.4** | **Not a stable version.** Aliases the latest version of PHP available. It is compiled at each commit to the master. |
