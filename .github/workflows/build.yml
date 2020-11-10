@@ -64,22 +64,6 @@ jobs:
                     echo ::set-output name=minor_version::${MINOR_VERSION}
                     echo ::set-output name=patch_version::${PATCH_VERSION}
 
-                    echo ::set-output name=build_args_minor::\
-                        --build-arg VERSION=${{ steps.get_version.outputs.prefix }}-${MINOR_VERSION} \
-                        --build-arg MINOR_PHP_VERSION=${MINOR_VERSION} \
-                        --build-arg FULL_PHP_VERSION=${MINOR_VERSION}${{ steps.get_version.outputs.suffix }} \
-                        --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-                        --build-arg VCS_REF=${GITHUB_SHA::8} \
-                        --tag "${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${MINOR_VERSION}" .
-
-                    echo ::set-output name=build_args_patch::\
-                        --build-arg VERSION=${{ steps.get_version.outputs.prefix }}-${PATCH_VERSION} \
-                        --build-arg MINOR_PHP_VERSION=${MINOR_VERSION} \
-                        --build-arg FULL_PHP_VERSION=${PATCH_VERSION}${{ steps.get_version.outputs.suffix }} \
-                        --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-                        --build-arg VCS_REF=${GITHUB_SHA::8} \
-                        --tag "${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${PATCH_VERSION}" .
-
             -   name: Build and Push (latest)
                 if: success() && matrix.php_version == 'latest'
                 uses: docker/build-push-action@v2
@@ -95,6 +79,44 @@ jobs:
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
 
+            -   name: Build and Push (minor)
+                if: success() && matrix.php_version != 'latest'
+                uses: docker/build-push-action@v2
+                with:
+                    context: .
+                    file: ./Dockerfile
+                    push: true
+                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+                    build-args: |
+                        VERSION=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+                        MINOR_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
+                        FULL_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}${{ steps.get_version.outputs.suffix }}
+                        BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+                        VCS_REF=${GITHUB_SHA::8}
+
+            -   name: Build and Push (patch)
+                if: success() && matrix.php_version != 'latest'
+                uses: docker/build-push-action@v2
+                with:
+                    context: .
+                    file: ./Dockerfile
+                    push: true
+                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                    build-args: |
+                        VERSION=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                        MINOR_PHP_VERSION=${{ steps.prepare.outputs.patch_version }}
+                        FULL_PHP_VERSION=${{ steps.prepare.outputs.patch_version }}${{ steps.get_version.outputs.suffix }}
+                        BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+                        VCS_REF=${GITHUB_SHA::8}
+
             -   name: Inspect (latest)
                 if: success() && matrix.php_version == 'latest'
                 run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
+
+            -   name: Inspect (minor)
+                if: success() && matrix.php_version != 'latest'
+                run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+
+            -   name: Inspect (patch)
+                if: success() && matrix.php_version != 'latest'
+                run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
