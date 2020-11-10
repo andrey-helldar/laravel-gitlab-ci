@@ -44,7 +44,7 @@ composer:
     script:
         - *init_ssh
         - *php_version
-        - composer install --prefer-dist --no-interaction --no-progress --no-scripts --no-suggest
+        - composer install --prefer-dist --no-interaction --no-progress --no-scripts
         - cp .env.testing .env
         - php artisan key:generate -vvv
     artifacts:
