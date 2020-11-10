@@ -81,7 +81,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 # Install PHP_CodeSniffer
-RUN composer global require "squizlabs/php_codesniffer=*" "hirak/prestissimo" --no-scripts --no-plugins
+RUN composer global require "squizlabs/php_codesniffer=*" --no-scripts --no-plugins
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
