@@ -58,14 +58,6 @@ jobs:
                     echo ::set-output name=minor_version::${MINOR_VERSION}
                     echo ::set-output name=patch_version::${PATCH_VERSION}
 
-                    echo ::set-output name=build_args_latest::\
-                        --build-arg VERSION=${{ steps.get_version.outputs.prefix }} \
-                        --build-arg MINOR_PHP_VERSION=alpine \
-                        --build-arg FULL_PHP_VERSION=alpine \
-                        --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-                        --build-arg VCS_REF=${GITHUB_SHA::8} \
-                        --tag "${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}" .
-
                     echo ::set-output name=build_args_minor::\
                         --build-arg VERSION=${{ steps.get_version.outputs.prefix }}-${MINOR_VERSION} \
                         --build-arg MINOR_PHP_VERSION=${MINOR_VERSION} \
@@ -82,24 +74,12 @@ jobs:
                         --build-arg VCS_REF=${GITHUB_SHA::8} \
                         --tag "${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${PATCH_VERSION}" .
 
-            #            -   name: Docker Build (build latest)
-            #                if: success() && matrix.php_version == 'latest'
-            #                run: docker build --output "type=image,push=false,name=${{ steps.get_version.outputs.prefix }}" ${{ steps.prepare.outputs.build_args_latest }}
-            #
-            #            -   name: Docker Build (build minor tag)
-            #                if: success() && matrix.php_version != 'latest'
-            #                run: docker build --output "type=image,push=false,name=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}" ${{ steps.prepare.outputs.build_args_minor }}
-            #
-            #            -   name: Docker Build (build patch tag)
-            #                if: success() && matrix.php_version != 'latest'
-            #                run: docker build --output "type=image,push=false,name=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}" ${{ steps.prepare.outputs.build_args_patch }}
-
             -   name: Login to DockerHub
                 if: success()
                 uses: docker/login-action@v1
                 with:
-                    username: ${{ secrets.DOCKER_HUB_USER }}
-                    password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+                    username: ${{ secrets.DOCKERHUB_USERNAME }}
+                    password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             -   name: Build and Push (latest)
                 if: success() && matrix.php_version == 'latest'
@@ -115,15 +95,3 @@ jobs:
                         FULL_PHP_VERSION=alpine
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
-
-#            -   name: Docker Build (push latest)
-#                if: success() && matrix.php_version == 'latest'
-#                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}
-#
-#            -   name: Docker Build (push minor tag)
-#                if: success() && matrix.php_version != 'latest'
-#                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${MINOR_VERSION}
-#
-#            -   name: Docker Build (push patch tag)
-#                if: success() && matrix.php_version != 'latest'
-#                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${PATCH_VERSION}
