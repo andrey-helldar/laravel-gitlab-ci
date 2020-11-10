@@ -40,7 +40,7 @@ jobs:
                 run: |
                     VERSION=${{ matrix.php_version }}
                     PREFIX=edge
-                    SUFFIX="-fpm"
+                    SUFFIX="-alpine"
 
                     if [[ $VERSION == "latest" ]]; then
                         SUFFIX=""
