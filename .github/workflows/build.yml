@@ -58,7 +58,7 @@ jobs:
                     echo ::set-output name=build_args_latest::\
                         --build-arg VERSION=${{ steps.get_version.outputs.prefix }} \
                         --build-arg MINOR_PHP_VERSION=latest \
-                        --build-arg FULL_PHP_VERSION=latest \
+                        --build-arg FULL_PHP_VERSION=alpine \
                         --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
                         --build-arg VCS_REF=${GITHUB_SHA::8} \
                         --tag "${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}" .
