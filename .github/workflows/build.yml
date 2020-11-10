@@ -100,24 +100,12 @@ jobs:
 
             -   name: Docker Build (push latest)
                 if: success() && matrix.php_version == 'latest'
-                run: docker build --output "type=image,push=true,name=${{ steps.get_version.outputs.prefix }}" ${{ steps.prepare.outputs.build_args_latest }}
+                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}
 
             -   name: Docker Build (push minor tag)
                 if: success() && matrix.php_version != 'latest'
-                run: docker build --output "type=image,push=true,name=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}" ${{ steps.prepare.outputs.build_args_minor }}
+                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${MINOR_VERSION}
 
             -   name: Docker Build (push patch tag)
                 if: success() && matrix.php_version != 'latest'
-                run: docker build --output "type=image,push=true,name=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}" ${{ steps.prepare.outputs.build_args_patch }}
-
-            -   name: Inspect latest image
-                if: success() && matrix.php_version == 'latest'
-                run: docker build imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
-
-            -   name: Inspect minor tag image
-                if: success() && matrix.php_version != 'latest'
-                run: docker build imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
-
-            -   name: Inspect patch tag image
-                if: success() && matrix.php_version != 'latest'
-                run: docker build imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                run: docker push ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}-${PATCH_VERSION}
