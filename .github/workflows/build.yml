@@ -96,4 +96,5 @@ jobs:
                         VCS_REF=${GITHUB_SHA::8}
 
             -   name: Inspect (latest)
+                if: success() && matrix.php_version == 'latest'
                 run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
