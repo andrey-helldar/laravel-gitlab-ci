@@ -35,6 +35,7 @@ jobs:
                     VERSION=${{ matrix.php_version }}
                     PREFIX=edge
                     SUFFIX="-alpine"
+                    LATEST_TAG=latest
 
                     if [[ $VERSION == "latest" ]]; then
                         SUFFIX=""
@@ -42,12 +43,14 @@ jobs:
 
                     if [[ $GITHUB_REF == refs/tags/* ]]; then
                         PREFIX=latest
+                        LATEST_TAG=stable
                     fi
 
                     echo ::set-output name=prefix::${PREFIX}
                     echo ::set-output name=suffix::${SUFFIX}
                     echo ::set-output name=minor_version::${VERSION:0:3}
                     echo ::set-output name=full_version::${VERSION}
+                    echo ::set-output name=latest_tag::${LATEST_TAG}
 
             -   name: Prepare
                 id: prepare
@@ -73,7 +76,7 @@ jobs:
                     push: true
                     tags: |
                         ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
-                        ${{ steps.prepare.outputs.docker_image }}:sep
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tag }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}
                         MINOR_PHP_VERSION=alpine
@@ -88,25 +91,12 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
-                    build-args: |
-                        VERSION=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
-                        MINOR_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
-                        FULL_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}${{ steps.get_version.outputs.suffix }}
-                        BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-                        VCS_REF=${GITHUB_SHA::8}
-
-            -   name: Build and Push (patch)
-                if: success() && matrix.php_version != 'latest'
-                uses: docker/build-push-action@v2
-                with:
-                    context: .
-                    file: ./Dockerfile
-                    push: true
-                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                    tags: |
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
-                        MINOR_PHP_VERSION=${{ steps.prepare.outputs.patch_version }}
+                        MINOR_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
                         FULL_PHP_VERSION=${{ steps.prepare.outputs.patch_version }}${{ steps.get_version.outputs.suffix }}
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
@@ -115,13 +105,11 @@ jobs:
                 if: success() && matrix.php_version == 'latest'
                 run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
 
-            -   name: Inspect (minor)
+            -   name: Inspect (version)
                 if: success() && matrix.php_version != 'latest'
-                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
-
-            -   name: Inspect (patch)
-                if: success() && matrix.php_version != 'latest'
-                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                run: |
+                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
 
     description:
         runs-on: ubuntu-latest
