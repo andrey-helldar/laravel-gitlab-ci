@@ -7,6 +7,6 @@
 ## Supported tags and respective `Dockerfile` links
 
 * [`latest`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest), [`stable`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest) - latest stable
-* [`edge`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest) - latest unstable
+* [`edge`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest), [`unstable`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest) - latest unstable
 * [`latest-7.4`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest), [`latest-7.3`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest), [`latest-7.2`](https://github.com/andrey-helldar/laravel-gitlab-ci/releases/latest)
 * [`edge-7.4`](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/helldar/Dockerfile), [`edge-7.3`](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/helldar/Dockerfile), [`edge-7.2`](https://github.com/andrey-helldar/laravel-gitlab-ci/blob/helldar/Dockerfile)

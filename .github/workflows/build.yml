@@ -35,7 +35,7 @@ jobs:
                     VERSION=${{ matrix.php_version }}
                     PREFIX=edge
                     SUFFIX="-alpine"
-                    LATEST_TAG=latest
+                    LATEST_TAG=unstable
 
                     if [[ $VERSION == "latest" ]]; then
                         SUFFIX=""
