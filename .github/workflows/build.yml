@@ -36,6 +36,7 @@ jobs:
                     PREFIX="edge-"
                     SUFFIX="-alpine"
                     LATEST_TAG=edge
+                    LATEST_TAGS=edge,unstable
 
                     if [[ $VERSION == "latest" ]]; then
                         SUFFIX=""
@@ -44,6 +45,7 @@ jobs:
                     if [[ $GITHUB_REF == refs/tags/* ]]; then
                         PREFIX=""
                         LATEST_TAG=stable
+                        LATEST_TAGS=latest,stable
                     fi
 
                     echo ::set-output name=prefix::${PREFIX}
@@ -51,6 +53,7 @@ jobs:
                     echo ::set-output name=minor_version::${VERSION:0:3}
                     echo ::set-output name=full_version::${VERSION}
                     echo ::set-output name=latest_tag::${LATEST_TAG}
+                    echo ::set-output name=latest_tags::${LATEST_TAGS}
 
             -   name: Prepare
                 id: prepare
@@ -74,7 +77,7 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tag }}
+                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tags }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.latest_tag }}
                         MINOR_PHP_VERSION=alpine
