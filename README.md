@@ -7,7 +7,7 @@
 ## Supported tags and respective `Dockerfile` links
 
 | Tags | Stability |
-|:---:|:---:|
+|:---|:---|
 | `latest`, `stable` | latest stable |
 | `edge`, `unstable` | latest unstable |
 | `7.4`, `7.3`, `7.2` | stable |
