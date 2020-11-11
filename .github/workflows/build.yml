@@ -111,12 +111,12 @@ jobs:
 
             -   name: Inspect (latest)
                 if: success() && matrix.php_version == 'latest'
-                run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
+                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
 
             -   name: Inspect (minor)
                 if: success() && matrix.php_version != 'latest'
-                run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
+                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.minor_version }}
 
             -   name: Inspect (patch)
                 if: success() && matrix.php_version != 'latest'
-                run: docker image inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
+                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
