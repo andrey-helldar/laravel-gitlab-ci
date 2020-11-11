@@ -121,13 +121,6 @@ jobs:
                 if: success() && matrix.php_version != 'latest'
                 run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}-${{ steps.prepare.outputs.patch_version }}
 
-            -   name: Update repo description
-                uses: peter-evans/dockerhub-description@v2
-                with:
-                    username: ${{ secrets.DOCKERHUB_USERNAME }}
-                    password: ${{ secrets.DOCKERHUB_TOKEN }}
-                    repository: ${{ steps.prepare.outputs.docker_image }}
-
     description:
         runs-on: ubuntu-latest
 
