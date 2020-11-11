@@ -9,7 +9,7 @@ on:
             - v*
 
 env:
-    DOCKER_IMAGE=helldar/laravel-gitlab-ci
+    DOCKER_IMAGE: helldar/laravel-gitlab-ci
 
 jobs:
     build:
