@@ -8,6 +8,9 @@ on:
         tags:
             - v*
 
+env:
+    DOCKER_IMAGE=helldar/laravel-gitlab-ci
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -36,7 +39,7 @@ jobs:
                     PREFIX="edge-"
                     SUFFIX="-alpine"
                     LATEST_TAG=edge
-                    LATEST_TAGS=edge,unstable
+                    LATEST_TAGS=$DOCKER_IMAGE:edge,$DOCKER_IMAGE:unstable
 
                     if [[ $VERSION == "latest" ]]; then
                         SUFFIX=""
@@ -45,7 +48,7 @@ jobs:
                     if [[ $GITHUB_REF == refs/tags/* ]]; then
                         PREFIX=""
                         LATEST_TAG=stable
-                        LATEST_TAGS=latest,stable
+                        LATEST_TAGS=$DOCKER_IMAGE:latest,$DOCKER_IMAGE:stable
                     fi
 
                     echo ::set-output name=prefix::${PREFIX}
@@ -61,12 +64,9 @@ jobs:
                     MINOR_PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
                     FULL_PHP_VERSION: ${{ steps.get_version.outputs.full_version }}
                 run: |
-                    DOCKER_IMAGE=helldar/laravel-gitlab-ci
-
                     MINOR_VERSION=${MINOR_PHP_VERSION}
                     PATCH_VERSION=${FULL_PHP_VERSION}
 
-                    echo ::set-output name=docker_image::${DOCKER_IMAGE}
                     echo ::set-output name=minor_version::${MINOR_VERSION}
                     echo ::set-output name=patch_version::${PATCH_VERSION}
 
@@ -77,7 +77,7 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tags }}
+                    tags: ${{ steps.get_version.outputs.latest_tags }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.latest_tag }}
                         MINOR_PHP_VERSION=alpine
@@ -93,8 +93,8 @@ jobs:
                     file: ./Dockerfile
                     push: true
                     tags: |
-                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
-                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
+                        $DOCKER_IMAGE:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
+                        $DOCKER_IMAGE:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
                         MINOR_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
@@ -104,13 +104,13 @@ jobs:
 
             -   name: Inspect (latest)
                 if: success() && matrix.php_version == 'latest'
-                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tag }}
+                run: docker buildx imagetools inspect $DOCKER_IMAGE:${{ steps.get_version.outputs.latest_tag }}
 
             -   name: Inspect (version)
                 if: success() && matrix.php_version != 'latest'
                 run: |
-                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
-                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
+                    docker buildx imagetools inspect $DOCKER_IMAGE:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
+                    docker buildx imagetools inspect $DOCKER_IMAGE:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
 
     description:
         runs-on: ubuntu-latest
