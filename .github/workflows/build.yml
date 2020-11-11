@@ -64,11 +64,9 @@ jobs:
                     MINOR_PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
                     FULL_PHP_VERSION: ${{ steps.get_version.outputs.full_version }}
                 run: |
-                    MINOR_VERSION=${MINOR_PHP_VERSION}
-                    PATCH_VERSION=${FULL_PHP_VERSION}
-
-                    echo ::set-output name=minor_version::${MINOR_VERSION}
-                    echo ::set-output name=patch_version::${PATCH_VERSION}
+                    echo ::set-output name=docker_image::${DOCKER_IMAGE}
+                    echo ::set-output name=minor_version::${MINOR_PHP_VERSION}
+                    echo ::set-output name=patch_version::${FULL_PHP_VERSION}
 
             -   name: Build and Push (latest)
                 if: success() && matrix.php_version == 'latest'
@@ -85,7 +83,7 @@ jobs:
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
 
-            -   name: Build and Push (minor)
+            -   name: Build and Push (version)
                 if: success() && matrix.php_version != 'latest'
                 uses: docker/build-push-action@v2
                 with:
@@ -93,8 +91,8 @@ jobs:
                     file: ./Dockerfile
                     push: true
                     tags: |
-                        ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
-                        ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
                         MINOR_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
@@ -104,13 +102,13 @@ jobs:
 
             -   name: Inspect (latest)
                 if: success() && matrix.php_version == 'latest'
-                run: docker buildx imagetools inspect ${DOCKER_IMAGE}:${{ steps.get_version.outputs.latest_tag }}
+                run: docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.latest_tag }}
 
             -   name: Inspect (version)
                 if: success() && matrix.php_version != 'latest'
                 run: |
-                    docker buildx imagetools inspect ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
-                    docker buildx imagetools inspect ${DOCKER_IMAGE}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
+                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.minor_version }}
+                    docker buildx imagetools inspect ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
 
     description:
         runs-on: ubuntu-latest
