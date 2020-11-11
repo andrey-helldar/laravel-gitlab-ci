@@ -118,15 +118,9 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v2
 
-            -   name: Login to DockerHub
-                uses: docker/login-action@v1
-                with:
-                    username: ${{ secrets.DOCKERHUB_USERNAME }}
-                    password: ${{ secrets.DOCKERHUB_TOKEN }}
-
             -   name: Update repo description
                 uses: peter-evans/dockerhub-description@v2
                 with:
                     username: ${{ secrets.DOCKERHUB_USERNAME }}
-                    password: ${{ secrets.DOCKERHUB_TOKEN }}
+                    password: ${{ secrets.DOCKERHUB_PASSWORD }}
                     repository: helldar/laravel-gitlab-ci
