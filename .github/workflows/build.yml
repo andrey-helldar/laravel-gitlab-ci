@@ -55,7 +55,7 @@ jobs:
                     MINOR_PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
                     FULL_PHP_VERSION: ${{ steps.get_version.outputs.full_version }}
                 run: |
-                    DOCKER_IMAGE=${GITHUB_REPOSITORY,,}
+                    DOCKER_IMAGE=helldar/laravel-gitlab-ci
 
                     MINOR_VERSION=${MINOR_PHP_VERSION}
                     PATCH_VERSION=${FULL_PHP_VERSION}
