@@ -71,7 +71,9 @@ jobs:
                     context: .
                     file: ./Dockerfile
                     push: true
-                    tags: ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
+                    tags: |
+                        ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}
+                        ${{ steps.prepare.outputs.docker_image }}:sep
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}
                         MINOR_PHP_VERSION=alpine
