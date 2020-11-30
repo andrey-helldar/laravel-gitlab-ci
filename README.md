@@ -8,7 +8,7 @@
 
 | Tags | Stability |
 |:---|:---|
-| `latest`, `stable` | latest stable |
+| `latest`, `stable`, `7.4` | latest stable |
 | `edge`, `unstable` | latest unstable |
 | `8.0`, `7.4`, `7.3`, `7.2` | stable minor |
 | `8.0.x`, `7.4.x`, `7.3.x`, `7.2.x` | stable patch, where `x` is the [PHP version number](https://www.php.net) |
