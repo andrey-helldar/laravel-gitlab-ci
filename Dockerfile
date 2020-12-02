@@ -8,6 +8,7 @@ ARG FULL_PHP_VERSION=8.0-alpine
 
 FROM php:${FULL_PHP_VERSION}
 
+ARG FULL_PHP_VERSION
 
 ###########################################################################
 # Install dev dependencies
@@ -80,7 +81,6 @@ RUN docker-php-ext-install \
     exif \
     gd \
     iconv \
-    json \
     mbstring \
     pcntl \
     pdo \
@@ -92,6 +92,11 @@ RUN docker-php-ext-install \
     tokenizer \
     xml \
     zip
+
+RUN if [ ${FULL_PHP_VERSION:0:3} != "8.0" ] && [ $FULL_PHP_VERSION != "latest" ] && [ $FULL_PHP_VERSION != "stable" ]; then \
+        docker-php-ext-install \
+            json \
+    ;fi
 
 # Install composer
 ENV COMPOSER_HOME /composer
