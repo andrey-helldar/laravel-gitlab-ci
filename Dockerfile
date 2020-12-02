@@ -48,18 +48,28 @@ RUN apk add --no-cache \
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN pecl install \
-    imagick \
-    xdebug \
-    redis
+RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
+        pecl install \
+            xdebug
+    ;else
+        pecl install \
+            imagick \
+            xdebug \
+            redis
+    ;fi
 
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN docker-php-ext-enable \
-    imagick \
-    xdebug \
-    redis
+RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
+        docker-php-ext-enable \
+            xdebug
+    ;else
+        docker-php-ext-enable \
+            imagick \
+            xdebug \
+            redis
+    ;fi
 
 RUN docker-php-ext-configure zip
 
