@@ -51,7 +51,7 @@ RUN apk add --no-cache \
 RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
         pecl install \
             xdebug
-    ;else
+    else
         pecl install \
             imagick \
             xdebug \
@@ -64,7 +64,7 @@ RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] |
 RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
         docker-php-ext-enable \
             xdebug
-    ;else
+    else
         docker-php-ext-enable \
             imagick \
             xdebug \
