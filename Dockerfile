@@ -8,7 +8,8 @@ ARG FULL_PHP_VERSION=8.0-alpine
 
 FROM php:${FULL_PHP_VERSION}
 
-ARG FULL_PHP_VERSION
+ARG FULL_PHP_VERSION=alpine
+ARG MINOR_PHP_VERSION=8.0
 
 ###########################################################################
 # Install dev dependencies
@@ -49,7 +50,7 @@ RUN apk add --no-cache \
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
+RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
         pecl install \
             xdebug; \
     else \
@@ -62,7 +63,7 @@ RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] |
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN if [ ${FULL_PHP_VERSION:0:3} = "8.0" ] || [ $FULL_PHP_VERSION = "latest" ] || [ $FULL_PHP_VERSION = "stable" ]; then \
+RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
         docker-php-ext-enable \
             xdebug; \
     else \
@@ -93,7 +94,7 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ ${FULL_PHP_VERSION:0:3} != "8.0" ] && [ $FULL_PHP_VERSION != "latest" ] && [ $FULL_PHP_VERSION != "stable" ]; then \
+RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
         docker-php-ext-install \
             json \
     ;fi
