@@ -4,7 +4,7 @@
 #--------------------------------------------------------------------------
 #
 
-ARG FULL_PHP_VERSION=7.4-alpine
+ARG FULL_PHP_VERSION=8.0-alpine
 
 FROM php:${FULL_PHP_VERSION}
 
