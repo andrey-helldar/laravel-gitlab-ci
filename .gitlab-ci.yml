@@ -1,7 +1,7 @@
 image: helldar/laravel-gitlab-ci:latest
 
 services:
-    - mysql:5.7
+    - mysql:latest
     - redis:latest
 
 variables:
