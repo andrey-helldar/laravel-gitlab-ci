@@ -12,17 +12,36 @@ ARG FULL_PHP_VERSION=alpine
 ARG MINOR_PHP_VERSION=8.0
 
 ###########################################################################
+# Software's Installation
+###########################################################################
+RUN set -eux; \
+    apt-get update -y; \
+    apt-get upgrade -y; \
+    apt-get install -y --no-install-recommends \
+            curl \
+            libmemcached-dev \
+            libz-dev \
+            libpq-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libfreetype6-dev \
+            libssl-dev \
+            libmcrypt-dev;
+
+###########################################################################
 # Install dev dependencies
 ###########################################################################
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    curl-dev \
-    imagemagick-dev \
-    libtool \
-    libxml2-dev \
-    postgresql-dev \
-    sqlite-dev \
-    oniguruma-dev
+RUN set -eux; \
+    apt-get update -y; \
+    apt-get upgrade -y; \
+    apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        imagemagick-dev \
+        libtool \
+        libxml2-dev \
+        postgresql-dev \
+        sqlite-dev \
+        oniguruma-dev
 
 ###########################################################################
 # Install production dependencies
