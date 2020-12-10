@@ -113,10 +113,10 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
-        docker-php-ext-install \
-            json \
-    ;fi
+#RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
+#        docker-php-ext-install \
+#            json \
+#    ;fi
 
 # Install composer
 ENV COMPOSER_HOME /composer
