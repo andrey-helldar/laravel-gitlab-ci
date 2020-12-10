@@ -59,14 +59,14 @@ yarn:
     cache:
         key: ${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}-yarn
         paths:
-            - node_modules/
+            - node_modules
     script:
         - yarn install --network-timeout=500000
         - yarn production
     artifacts:
         expire_in: 1 week
         paths:
-            - node_modules/
+            - node_modules
             - public/mix-manifest.json
 
 phpunit:
