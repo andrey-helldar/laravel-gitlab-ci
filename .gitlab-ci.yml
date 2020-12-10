@@ -31,26 +31,24 @@ variables:
 .php_version: &php_version |
     php -v
 
+.composer_install: &composer_install |
+    composer install --prefer-dist --no-interaction --no-progress --no-scripts
+
 
 composer:
     stage: build
     only:
         - master
         - release
-    cache:
-        key: ${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}-composer
-        paths:
-            - vendor/
     script:
         - *init_ssh
         - *php_version
-        - composer install --prefer-dist --no-interaction --no-progress --no-scripts
+        - *composer_install
         - cp .env.testing .env
         - php artisan key:generate -vvv
     artifacts:
         expire_in: 1 week
         paths:
-            - vendor/
             - .env
 
 yarn:
@@ -80,6 +78,7 @@ phpunit:
         - composer
         - yarn
     script:
+        - *composer_install
         - php artisan migrate:fresh --seed --force -vvv
         - phpunit --no-coverage -v
 
@@ -89,5 +88,6 @@ production:
         - release
     script:
         - *init_ssh
+        - *composer_install
         - *change_file_permissions
         - php artisan deploy -vvv --revision=$CI_COMMIT_SHA
