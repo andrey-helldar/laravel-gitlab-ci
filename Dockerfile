@@ -100,12 +100,17 @@ RUN docker-php-ext-install \
 #            json \
 #    ;fi
 
-# Install composer
+# Install Composer
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 RUN composer --version
+
+# Install Deployer
+curl -LO https://deployer.org/deployer.phar
+mv deployer.phar /usr/local/bin/dep
+chmod +x /usr/local/bin/dep
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
