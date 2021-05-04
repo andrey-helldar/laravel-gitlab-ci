@@ -38,7 +38,7 @@ variables:
 composer:
     stage: build
     only:
-        - master
+        - main
         - release
     script:
         - *init_ssh
@@ -51,18 +51,18 @@ composer:
         paths:
             - .env
 
-yarn:
+npm:
     stage: build
     only:
-        - master
+        - main
         - release
     cache:
         key: ${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}-yarn
         paths:
             - node_modules
     script:
-        - yarn install --network-timeout=500000
-        - yarn production
+        - npm ci
+        - npm run build
     artifacts:
         expire_in: 1 week
         paths:
@@ -72,11 +72,11 @@ yarn:
 phpunit:
     stage: test
     only:
-        - master
+        - main
         - release
     dependencies:
         - composer
-        - yarn
+        - npm
     script:
         - *composer_install
         - php artisan migrate:fresh --seed --force -vvv
@@ -90,4 +90,4 @@ production:
         - *init_ssh
         - *composer_install
         - *change_file_permissions
-        - php artisan deploy -vvv --revision=$CI_COMMIT_SHA
+        - dep deploy
