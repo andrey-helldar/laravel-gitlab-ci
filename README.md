@@ -3,6 +3,7 @@
 🐳 Generic docker image for Laravel Applications
 
 [![Docker Badge](https://img.shields.io/docker/pulls/helldar/laravel-gitlab-ci)](https://hub.docker.com/r/helldar/laravel-gitlab-ci/)
+[![Docker Build](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml/badge.svg)](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml)
 
 ## Supported tags and respective `Dockerfile` links
 
