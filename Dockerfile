@@ -40,7 +40,6 @@ RUN apk add --no-cache \
     make \
     mysql-client \
     nodejs \
-    nodejs-npm \
     yarn \
     openssh-client \
     postgresql-libs \
