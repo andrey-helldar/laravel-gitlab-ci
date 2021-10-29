@@ -1,5 +1,7 @@
 # Deploying Docker container (with Gitlab CI and other)
 
+<img src="https://preview.dragon-code.pro/andrey-helldar/laravel-gitlab-ci.svg?brand=docker" alt="Laravel Gitlab CI"/>
+
 🐳 Generic docker image for Laravel Applications
 
 [![Docker Badge](https://img.shields.io/docker/pulls/helldar/laravel-gitlab-ci)](https://hub.docker.com/r/helldar/laravel-gitlab-ci/)
