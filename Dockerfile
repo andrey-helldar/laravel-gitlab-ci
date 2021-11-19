@@ -83,6 +83,7 @@ RUN docker-php-ext-install \
     gd \
     iconv \
     mbstring \
+    opcache \
     pcntl \
     pdo \
     pdo_mysql \
@@ -93,11 +94,6 @@ RUN docker-php-ext-install \
     tokenizer \
     xml \
     zip
-
-#RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
-#        docker-php-ext-install \
-#            json \
-#    ;fi
 
 # Install Composer
 ENV COMPOSER_HOME /composer
