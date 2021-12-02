@@ -1,4 +1,4 @@
-image: helldar/laravel-gitlab-ci:latest
+image: helldar/laravel-gitlab-ci:stable
 
 services:
     - mysql:latest
