@@ -84,7 +84,7 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $MINOR_PHP_VERSION != "8.1" ]; then \
+RUN if [ $MINOR_PHP_VERSION != "8.1" ] || [ $MINOR_PHP_VERSION = "lat" ]; then \
         docker-php-ext-install \
             tokenizer \
     ;fi
