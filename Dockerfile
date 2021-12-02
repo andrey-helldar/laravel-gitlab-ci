@@ -50,28 +50,18 @@ RUN apk add --no-cache \
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
-        pecl install \
-            xdebug; \
-    else \
-        pecl install \
-            imagick \
-            xdebug \
-            redis \
-    ;fi
+RUN pecl install \
+    imagick \
+    xdebug \
+    redis
 
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN if [ $MINOR_PHP_VERSION = "8.0" ] || [ $FULL_PHP_VERSION = "alpine" ]; then \
-        docker-php-ext-enable \
-            xdebug; \
-    else \
-        docker-php-ext-enable \
-            imagick \
-            xdebug \
-            redis \
-    ;fi
+RUN docker-php-ext-enable \
+    imagick \
+    xdebug \
+    redis
 
 RUN docker-php-ext-configure zip
 
@@ -91,9 +81,13 @@ RUN docker-php-ext-install \
     pdo_sqlite \
     soap \
     sockets \
-    tokenizer \
     xml \
     zip
+
+RUN if [ $MINOR_PHP_VERSION != "8.1" ]; then \
+        docker-php-ext-install \
+            tokenizer \
+    ;fi
 
 # Install Composer
 ENV COMPOSER_HOME /composer
