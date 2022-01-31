@@ -83,7 +83,7 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $MINOR_PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
+RUN if [ $MINOR_PHP_VERSION != "8.0" ] && $MINOR_PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
         docker-php-ext-install \
             tokenizer \
             sockets \
