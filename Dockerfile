@@ -80,13 +80,13 @@ RUN docker-php-ext-install \
     pdo_pgsql \
     pdo_sqlite \
     soap \
-    sockets \
     xml \
     zip
 
 RUN if [ $MINOR_PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
         docker-php-ext-install \
             tokenizer \
+            sockets \
     ;fi
 
 # Install Composer
