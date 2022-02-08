@@ -53,7 +53,8 @@ RUN apk add --no-cache \
 RUN pecl install \
     imagick \
     xdebug \
-    redis
+    redis \
+    yaml
 
 ###########################################################################
 # Install and enable php extensions
