@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps \
 # Install production dependencies
 ###########################################################################
 RUN apk add --no-cache \
+    autoconf \
     bash \
     curl \
     g++ \
@@ -41,11 +42,17 @@ RUN apk add --no-cache \
     mysql-client \
     nodejs \
     yarn \
+    yaml-dev \
     openssh-client \
     postgresql-libs \
     rsync \
     zlib-dev \
     libzip-dev
+
+###########################################################################
+# Update PECL channel
+###########################################################################
+RUN pecl channel-update pecl.php.net
 
 ###########################################################################
 # Install PECL and PEAR extensions
@@ -62,7 +69,8 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     xdebug \
-    redis
+    redis \
+    yaml
 
 RUN docker-php-ext-configure zip
 
