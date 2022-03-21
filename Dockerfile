@@ -9,7 +9,7 @@ ARG FULL_PHP_VERSION=8.1-alpine
 FROM php:${FULL_PHP_VERSION}
 
 ARG FULL_PHP_VERSION=alpine
-ARG MINOR_PHP_VERSION=8.1
+ARG PHP_VERSION=8.1
 
 
 ###########################################################################
@@ -80,7 +80,6 @@ RUN docker-php-ext-install \
     curl \
     exif \
     gd \
-    iconv \
     mbstring \
     opcache \
     pcntl \
@@ -92,7 +91,7 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $MINOR_PHP_VERSION != "8.0" ] && $MINOR_PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
+RUN if [ $PHP_VERSION != "8.0" ] && $PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
         docker-php-ext-install \
             tokenizer \
             sockets \
