@@ -66,11 +66,13 @@ RUN pecl install \
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN docker-php-ext-enable \
-    imagick \
-    xdebug \
-    redis \
-    yaml
+RUN if [ $PHP_VERSION != "8.2.0alpha1" ]; then \
+    docker-php-ext-enable \
+        xdebug \
+        imagick \
+        redis \
+        yaml \
+    ;fi
 
 RUN docker-php-ext-configure zip
 
@@ -91,7 +93,7 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $PHP_VERSION != "8.0" ] && $PHP_VERSION != "8.1" ] && [ $FULL_PHP_VERSION != "alpine" ]; then \
+RUN if [ $PHP_VERSION = "7.4" ]; then \
         docker-php-ext-install \
             tokenizer \
             sockets \
