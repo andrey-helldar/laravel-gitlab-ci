@@ -108,7 +108,10 @@ RUN composer --version
 
 # Install Composer's dependencies
 RUN composer global require deployer/deployer:^7.0.0-rc.8
-RUN composer global require dragon-code/codestyler:^2.2
+
+RUN if [ $PHP_VERSION != "7.4" ]; then \
+        composer global require dragon-code/codestyler \
+    ;fi
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
