@@ -17,7 +17,7 @@ jobs:
 
         strategy:
             matrix:
-                php_version: [ 7.4.30, 8.0.21, 8.1.8, 8.2.0alpha3, latest ]
+                php_version: [ 7.4.30, 8.0.21, 8.1.8, 8.2.0beta1, latest ]
 
         steps:
             -   name: Checkout
@@ -45,7 +45,7 @@ jobs:
                         SUFFIX=""
                     fi
 
-                    if [[ $GITHUB_REF == refs/tags/* && ${VERSION:5:5} != "alpha" ]]; then
+                    if [[ $GITHUB_REF == refs/tags/* && ${VERSION:5:5} != "alpha" && ${VERSION:5:4} != "beta" ]]; then
                         PREFIX=""
                         LATEST_TAG=stable
                         LATEST_TAGS="${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:stable"
