@@ -66,7 +66,7 @@ RUN pecl install \
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN if [ $PHP_VERSION != "8.2.0alpha1" && $PHP_VERSION != "8.2" ]; then \
+RUN if [ $PHP_VERSION != "8.2.0alpha3" && $PHP_VERSION != "8.2" ]; then \
     docker-php-ext-enable \
         xdebug \
         imagick \
