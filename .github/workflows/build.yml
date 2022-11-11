@@ -17,7 +17,7 @@ jobs:
 
         strategy:
             matrix:
-                php_version: [ 7.4.33, 8.0.25, 8.1.12, 8.2.0RC5, latest ]
+                php_version: [ 7.4.33, 8.0.25, 8.1.12, 8.2.0RC6, latest ]
 
         steps:
             -   name: Checkout
