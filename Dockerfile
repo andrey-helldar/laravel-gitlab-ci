@@ -4,12 +4,12 @@
 #--------------------------------------------------------------------------
 #
 
-ARG FULL_PHP_VERSION=8.1-alpine
+ARG FULL_PHP_VERSION=8.2-alpine
 
 FROM php:${FULL_PHP_VERSION}
 
 ARG FULL_PHP_VERSION=alpine
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.2
 
 
 ###########################################################################
@@ -66,13 +66,11 @@ RUN pecl install \
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
-RUN if [ $PHP_VERSION != "8.2.0alpha3" && $PHP_VERSION != "8.2" ]; then \
-    docker-php-ext-enable \
-        xdebug \
-        imagick \
-        redis \
-        yaml \
-    ;fi
+RUN docker-php-ext-enable \
+    imagick \
+    xdebug \
+    redis \
+    yaml
 
 RUN docker-php-ext-configure zip
 
