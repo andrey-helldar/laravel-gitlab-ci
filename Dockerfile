@@ -75,7 +75,8 @@ RUN docker-php-ext-enable \
 ###########################################################################
 
 RUN if [ $PHP_VERSION = "7.4" ]; then \
-        apk add php74-xdebug \
+        pecl install xdebug && \
+        docker-php-ext-enable xdebug \
     ;fi
 
 RUN if [ $PHP_VERSION = "8.0" ]; then \
