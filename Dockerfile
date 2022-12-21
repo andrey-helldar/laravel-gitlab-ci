@@ -60,7 +60,7 @@ RUN pecl channel-update pecl.php.net
 RUN pecl install \
     imagick \
     redis \
-    yaml \
+    yaml
 
 ###########################################################################
 # Install and enable php extensions
