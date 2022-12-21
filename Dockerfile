@@ -59,18 +59,40 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 RUN pecl install \
     imagick \
-    xdebug \
     redis \
-    yaml
+    yaml \
 
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
 RUN docker-php-ext-enable \
     imagick \
-    xdebug \
     redis \
     yaml
+
+###########################################################################
+# Install XDebug
+###########################################################################
+
+RUN if [ $PHP_VERSION = "7.4" ]; then \
+        apk add php74-xdebug \
+    ;fi
+
+RUN if [ $PHP_VERSION = "8.0" ]; then \
+        apk add php80-xdebug \
+    ;fi
+
+RUN if [ $PHP_VERSION = "8.1" ]; then \
+        apk add php81-xdebug \
+    ;fi
+
+RUN if [ $PHP_VERSION = "8.2" ]; then \
+        apk add php82-xdebug \
+    ;fi
+
+###########################################################################
+# Configure
+###########################################################################
 
 RUN docker-php-ext-configure zip
 
