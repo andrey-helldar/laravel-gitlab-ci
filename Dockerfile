@@ -60,6 +60,7 @@ RUN pecl channel-update pecl.php.net
 RUN pecl install \
     imagick \
     redis \
+    xdiff \
     yaml
 
 ###########################################################################
@@ -68,6 +69,7 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     redis \
+    xdiff \
     yaml
 
 ###########################################################################
