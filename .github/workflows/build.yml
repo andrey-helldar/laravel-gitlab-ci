@@ -70,7 +70,7 @@ jobs:
 
             -   name: Build and Push (latest)
                 if: success() && matrix.php_version == 'latest'
-                uses: docker/build-push-action@v3
+                uses: docker/build-push-action@v4
                 with:
                     context: .
                     file: ./Dockerfile
@@ -85,7 +85,7 @@ jobs:
 
             -   name: Build and Push (version)
                 if: success() && matrix.php_version != 'latest'
-                uses: docker/build-push-action@v3
+                uses: docker/build-push-action@v4
                 with:
                     context: .
                     file: ./Dockerfile
