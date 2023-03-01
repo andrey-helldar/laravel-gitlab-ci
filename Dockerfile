@@ -9,21 +9,24 @@ ARG FULL_PHP_VERSION=8.2-alpine
 FROM php:${FULL_PHP_VERSION}
 
 ARG FULL_PHP_VERSION=alpine
-ARG PHP_VERSION=8.2
+ARG SHORT_PHP_VERSION=8.2
 
 
 ###########################################################################
 # Install dev dependencies
 ###########################################################################
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    curl-dev \
-    imagemagick-dev \
-    libtool \
-    libxml2-dev \
-    postgresql-dev \
-    sqlite-dev \
-    oniguruma-dev
+RUN apk add --update linux-headers
+
+RUN apk update && \
+    apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        curl-dev \
+        imagemagick-dev \
+        libtool \
+        libxml2-dev \
+        postgresql-dev \
+        sqlite-dev \
+        oniguruma-dev
 
 ###########################################################################
 # Install production dependencies
@@ -47,7 +50,8 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
-    libzip-dev
+    libzip-dev \
+    wget
 
 ###########################################################################
 # Update PECL channel
@@ -59,30 +63,16 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 RUN pecl install \
     imagick \
-    redis
+    redis \
+    xdebug
 
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
 RUN docker-php-ext-enable \
     imagick \
-    redis
-
-###########################################################################
-# Install XDebug
-###########################################################################
-
-RUN if [ $PHP_VERSION = "8.0" ]; then \
-        apk add php80-xdebug \
-    ;fi
-
-RUN if [ $PHP_VERSION = "8.1" ]; then \
-        apk add php81-xdebug \
-    ;fi
-
-RUN if [ $PHP_VERSION = "8.2" ]; then \
-        apk add php82-xdebug \
-    ;fi
+    redis \
+    xdebug
 
 ###########################################################################
 # Configure

@@ -61,11 +61,11 @@ jobs:
             -   name: Prepare
                 id: prepare
                 env:
-                    PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
+                    SHORT_PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
                     FULL_PHP_VERSION: ${{ steps.get_version.outputs.full_version }}
                 run: |
                     echo ::set-output name=docker_image::${DOCKER_IMAGE}
-                    echo ::set-output name=minor_version::${PHP_VERSION}
+                    echo ::set-output name=minor_version::${SHORT_PHP_VERSION}
                     echo ::set-output name=patch_version::${FULL_PHP_VERSION}
 
             -   name: Build and Push (latest)
@@ -78,7 +78,7 @@ jobs:
                     tags: ${{ steps.get_version.outputs.latest_tags }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.latest_tag }}
-                        PHP_VERSION=alpine
+                        SHORT_PHP_VERSION=alpine
                         FULL_PHP_VERSION=alpine
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
@@ -95,7 +95,7 @@ jobs:
                         ${{ steps.prepare.outputs.docker_image }}:${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
                     build-args: |
                         VERSION=${{ steps.get_version.outputs.prefix }}${{ steps.prepare.outputs.patch_version }}
-                        PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
+                        SHORT_PHP_VERSION=${{ steps.prepare.outputs.minor_version }}
                         FULL_PHP_VERSION=${{ steps.prepare.outputs.patch_version }}${{ steps.get_version.outputs.suffix }}
                         BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
                         VCS_REF=${GITHUB_SHA::8}
