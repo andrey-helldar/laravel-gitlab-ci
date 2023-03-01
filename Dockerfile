@@ -76,11 +76,6 @@ RUN docker-php-ext-enable \
 # Install XDebug
 ###########################################################################
 
-RUN if [ $PHP_VERSION = "7.4" ]; then \
-        pecl install xdebug && \
-        docker-php-ext-enable xdebug \
-    ;fi
-
 RUN if [ $PHP_VERSION = "8.0" ]; then \
         apk add php80-xdebug \
     ;fi
@@ -116,12 +111,6 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN if [ $PHP_VERSION = "7.4" ]; then \
-        docker-php-ext-install \
-            tokenizer \
-            sockets \
-    ;fi
-
 # Install Composer
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
@@ -130,11 +119,9 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 RUN composer --version
 
 # Install Composer's dependencies
-RUN composer global require deployer/deployer:^7.0
-
-RUN if [ $PHP_VERSION != "7.4" ]; then \
-        composer global require dragon-code/codestyler \
-    ;fi
+RUN composer global require deployer/deployer \
+    dragon-code/codestyler \
+    laravel/pint
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
