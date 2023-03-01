@@ -59,18 +59,14 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 RUN pecl install \
     imagick \
-    redis \
-    xdiff \
-    yaml
+    redis
 
 ###########################################################################
 # Install and enable php extensions
 ###########################################################################
 RUN docker-php-ext-enable \
     imagick \
-    redis \
-    xdiff \
-    yaml
+    redis
 
 ###########################################################################
 # Install XDebug
