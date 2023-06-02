@@ -24,9 +24,9 @@ RUN apk update && \
         imagemagick-dev \
         libtool \
         libxml2-dev \
+        oniguruma-dev \
         postgresql-dev \
-        sqlite-dev \
-        oniguruma-dev
+        sqlite-dev
 
 ###########################################################################
 # Install production dependencies
@@ -41,17 +41,17 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
+    libzip-dev \
     make \
     mysql-client \
     nodejs \
-    yarn \
-    yaml-dev \
     openssh-client \
     postgresql-libs \
     rsync \
-    zlib-dev \
-    libzip-dev \
-    wget
+    wget \
+    yaml-dev \
+    yarn \
+    zlib-dev
 
 ###########################################################################
 # Update PECL channel
@@ -64,8 +64,7 @@ RUN pecl channel-update pecl.php.net
 RUN pecl install \
     imagick \
     redis \
-    xdebug \
-    xdiff
+    xdebug
 
 ###########################################################################
 # Install and enable php extensions
