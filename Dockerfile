@@ -64,7 +64,8 @@ RUN pecl channel-update pecl.php.net
 RUN pecl install \
     imagick \
     redis \
-    xdebug
+    xdebug \
+    xdiff
 
 ###########################################################################
 # Install and enable php extensions
