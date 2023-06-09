@@ -11,6 +11,13 @@ FROM php:${FULL_PHP_VERSION}
 ARG FULL_PHP_VERSION=alpine
 ARG SHORT_PHP_VERSION=8.2
 
+ENV DEBIAN_FRONTEND noninteractive
+
+###########################################################################
+# Update timezones
+###########################################################################
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ###########################################################################
 # Install dev dependencies
@@ -99,11 +106,9 @@ RUN docker-php-ext-install \
 
 # Install Composer
 ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
+ENV PATH ./vendor/bin:/composer/vendor/bin:~/.composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -s https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer \
-    | php -- --install-dir=/usr/local/bin/ --filename=composer --quiet \
-RUN a+x /usr/local/bin/composer
+RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer --version
 
 # Install Composer's dependencies
