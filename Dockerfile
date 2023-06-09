@@ -105,7 +105,6 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 RUN composer --version
 
 # Install Composer's dependencies
-RUN composer global update
 RUN composer global require \
     deployer/deployer \
     dragon-code/codestyler \
