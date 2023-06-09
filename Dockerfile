@@ -106,7 +106,7 @@ RUN docker-php-ext-install \
 
 # Install Composer
 ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/composer/vendor/bin:~/.composer/vendor/bin:$PATH
+ENV PATH ./vendor/bin:/composer/vendor/bin:~/.composer/vendor/bin:~/.config/composer/vendor/bin:/root/.config/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer --version
