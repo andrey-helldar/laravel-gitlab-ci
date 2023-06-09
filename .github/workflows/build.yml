@@ -7,6 +7,7 @@ on:
         branches: main
         tags:
             - v*
+    workflow_dispatch:
 
 env:
     DOCKER_IMAGE: helldar/laravel-gitlab-ci
@@ -17,7 +18,7 @@ jobs:
 
         strategy:
             matrix:
-                php_version: [ 8.0.28, 8.1.19, 8.2.6, latest ]
+                php_version: [ 8.0.29, 8.1.20, 8.2.7, latest ]
 
         steps:
             -   name: Checkout
@@ -51,12 +52,12 @@ jobs:
                         LATEST_TAGS="${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:stable"
                     fi
 
-                    echo ::set-output name=prefix::${PREFIX}
-                    echo ::set-output name=suffix::${SUFFIX}
-                    echo ::set-output name=minor_version::${VERSION:0:3}
-                    echo ::set-output name=full_version::${VERSION}
-                    echo ::set-output name=latest_tag::${LATEST_TAG}
-                    echo ::set-output name=latest_tags::${LATEST_TAGS}
+                    echo "prefix=${PREFIX}" >> "$GITHUB_OUTPUT"
+                    echo "suffix=${SUFFIX}" >> "$GITHUB_OUTPUT"
+                    echo "minor_version=${VERSION:0:3}" >> "$GITHUB_OUTPUT"
+                    echo "full_version=${VERSION}" >> "$GITHUB_OUTPUT"
+                    echo "latest_tag=${LATEST_TAG}" >> "$GITHUB_OUTPUT"
+                    echo "latest_tags=${LATEST_TAGS}" >> "$GITHUB_OUTPUT"
 
             -   name: Prepare
                 id: prepare
@@ -64,9 +65,9 @@ jobs:
                     SHORT_PHP_VERSION: ${{ steps.get_version.outputs.minor_version }}
                     FULL_PHP_VERSION: ${{ steps.get_version.outputs.full_version }}
                 run: |
-                    echo ::set-output name=docker_image::${DOCKER_IMAGE}
-                    echo ::set-output name=minor_version::${SHORT_PHP_VERSION}
-                    echo ::set-output name=patch_version::${FULL_PHP_VERSION}
+                    echo "docker_image=${DOCKER_IMAGE}" >> "$GITHUB_OUTPUT"
+                    echo "minor_version=${SHORT_PHP_VERSION}" >> "$GITHUB_OUTPUT"
+                    echo "patch_version=${FULL_PHP_VERSION}" >> "$GITHUB_OUTPUT"
 
             -   name: Build and Push (latest)
                 if: success() && matrix.php_version == 'latest'
