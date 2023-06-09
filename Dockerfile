@@ -24,9 +24,9 @@ RUN apk update && \
         imagemagick-dev \
         libtool \
         libxml2-dev \
-        oniguruma-dev \
         postgresql-dev \
-        sqlite-dev
+        sqlite-dev \
+        oniguruma-dev
 
 ###########################################################################
 # Install production dependencies
@@ -41,17 +41,17 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
-    libzip-dev \
     make \
     mysql-client \
     nodejs \
+    yarn \
+    yaml-dev \
     openssh-client \
     postgresql-libs \
     rsync \
-    wget \
-    yaml-dev \
-    yarn \
-    zlib-dev
+    zlib-dev \
+    libzip-dev \
+    wget
 
 ###########################################################################
 # Update PECL channel
@@ -101,7 +101,9 @@ RUN docker-php-ext-install \
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+RUN curl -s https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer \
+    | php -- --install-dir=/usr/local/bin/ --filename=composer --quiet \
+RUN a+x /usr/local/bin/composer
 RUN composer --version
 
 # Install Composer's dependencies
