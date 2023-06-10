@@ -111,6 +111,10 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer --version
 
+# Export composer vendor path
+RUN echo "" >> ~/.bashrc && \
+    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+
 # Install Composer's dependencies
 RUN composer global require \
     deployer/deployer \
