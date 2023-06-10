@@ -111,15 +111,20 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer --version
 
-# Export composer vendor path
-RUN echo "" >> ~/.bashrc && \
-    echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+# Install deployer
+RUN curl -sLS https://github.com/deployphp/deployer/releases/latest/download/deployer.phar
+RUN mv deployer.phar /usr/bin/dep
+RUN a+x /usr/bin/dep
 
-# Install Composer's dependencies
-RUN composer global require \
-    deployer/deployer \
-    dragon-code/codestyler \
-    laravel/pint
+# Install The Dragon Code Styler
+RUN curl -sLS https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar
+RUN mv codestyle.phar /usr/bin/codestyle
+RUN a+x /usr/bin/codestyle
+
+# Install Laravel Pint
+RUN curl -sLS https://github.com/laravel/pint/releases/latest/download/pint.phar
+RUN mv pint.phar /usr/bin/pint
+RUN a+x /usr/bin/pint
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
