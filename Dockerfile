@@ -110,7 +110,6 @@ ENV PATH ./vendor/bin:/vendor/bin:/composer/vendor/bin:~/.composer/vendor/bin:/v
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer --version
-RUN composer config --list --global
 
 # Install Composer's dependencies
 RUN composer global require \
