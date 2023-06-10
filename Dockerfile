@@ -114,19 +114,19 @@ RUN composer --version
 # Install deployer
 RUN curl https://github.com/deployphp/deployer/releases/latest/download/deployer.phar -s \
     --output /usr/bin/dep
-RUN ["chmod", "a+x", "/usr/bin/dep"]
+RUN chmod +x /usr/bin/dep
 RUN dep --version
 
 # Install The Dragon Code Styler
 RUN curl https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar -s \
     --output /usr/bin/codestyle
-RUN ["chmod", "a+x", "/usr/bin/codestyle"]
+RUN chmod +x /usr/bin/codestyle
 RUN codestyle --version
 
 # Install Laravel Pint
 RUN curl https://github.com/laravel/pint/releases/latest/download/pint.phar -s \
     --output /usr/bin/pint
-RUN ["chmod", "a+x", "/usr/bin/pint"]
+RUN chmod +x /usr/bin/pint
 RUN pint --version
 
 # Cleanup dev dependencies
