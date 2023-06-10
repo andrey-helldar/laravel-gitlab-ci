@@ -48,17 +48,17 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
+    libzip-dev \
     make \
     mysql-client \
     nodejs \
-    yarn \
-    yaml-dev \
     openssh-client \
     postgresql-libs \
     rsync \
-    zlib-dev \
-    libzip-dev \
-    wget
+    wget \
+    yaml-dev \
+    yarn \
+    zlib-dev
 
 ###########################################################################
 # Update PECL channel
@@ -112,19 +112,19 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
 RUN composer --version
 
 # Install deployer
-RUN curl https://github.com/deployphp/deployer/releases/latest/download/deployer.phar -s \
+RUN curl -sLS https://github.com/deployphp/deployer/releases/latest/download/deployer.phar \
     --output /usr/bin/dep
 RUN chmod +x /usr/bin/dep
 RUN dep --version
 
 # Install The Dragon Code Styler
-RUN curl https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar -s \
+RUN curl -sLS https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar \
     --output /usr/bin/codestyle
 RUN chmod +x /usr/bin/codestyle
 RUN codestyle --version
 
 # Install Laravel Pint
-RUN curl https://github.com/laravel/pint/releases/latest/download/pint.phar -s \
+RUN curl -sLS https://github.com/laravel/pint/releases/latest/download/pint.phar \
     --output /usr/bin/pint
 RUN chmod +x /usr/bin/pint
 RUN pint --version
