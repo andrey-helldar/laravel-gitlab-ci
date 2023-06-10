@@ -87,6 +87,7 @@ RUN docker-php-ext-install \
     bcmath \
     calendar \
     curl \
+    dom \
     exif \
     gd \
     mbstring \
