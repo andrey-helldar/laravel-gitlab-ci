@@ -112,19 +112,19 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
 RUN composer --version
 
 # Install deployer
-RUN curl -sLS https://github.com/deployphp/deployer/releases/latest/download/deployer.phar
-RUN mv deployer.phar /usr/bin/dep
-RUN a+x /usr/bin/dep
+RUN curl https://github.com/deployphp/deployer/releases/latest/download/deployer.phar -s \
+    --output /usr/bin/dep
+RUN ["chmod", "a+x", "/usr/bin/dep"]
 
 # Install The Dragon Code Styler
-RUN curl -sLS https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar
-RUN mv codestyle.phar /usr/bin/codestyle
-RUN a+x /usr/bin/codestyle
+RUN curl https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar -s \
+    --output /usr/bin/codestyle
+RUN ["chmod", "a+x", "/usr/bin/codestyle"]
 
 # Install Laravel Pint
-RUN curl -sLS https://github.com/laravel/pint/releases/latest/download/pint.phar
-RUN mv pint.phar /usr/bin/pint
-RUN a+x /usr/bin/pint
+RUN curl https://github.com/laravel/pint/releases/latest/download/pint.phar -s \
+    --output /usr/bin/pint
+RUN ["chmod", "a+x", "/usr/bin/pint"]
 
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
