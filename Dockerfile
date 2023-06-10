@@ -1,12 +1,8 @@
-#
-#--------------------------------------------------------------------------
-# Image Setup
-#--------------------------------------------------------------------------
-#
-
 ARG FULL_PHP_VERSION=8.2-alpine
 
 FROM php:${FULL_PHP_VERSION}
+
+LABEL maintainer="Andrey Helldar"
 
 ARG FULL_PHP_VERSION=alpine
 ARG SHORT_PHP_VERSION=8.2
