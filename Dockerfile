@@ -106,27 +106,20 @@ RUN docker-php-ext-install \
 
 # Install Composer
 ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/vendor/bin:/composer/vendor/bin:~/.composer/vendor/bin:/var/www/vendor/bin:$PATH
+ENV PATH ./vendor/bin:/vendor/bin:/composer/vendor/bin:$HOME/.composer/vendor/bin:/var/www/vendor/bin:$HOME/.local/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+
+# Install Composer's dependencies
+RUN composer global require \
+    deployer/deployer \
+    dragon-code/codestyler \
+    laravel/pint
+
+# Get the versions
 RUN composer --version
-
-# Install deployer
-RUN curl -sLS https://github.com/deployphp/deployer/releases/latest/download/deployer.phar \
-    --output /usr/bin/dep
-RUN chmod +x /usr/bin/dep
 RUN dep --version
-
-# Install The Dragon Code Styler
-RUN curl -sLS https://github.com/TheDragonCode/codestyler/releases/latest/download/codestyle.phar \
-    --output /usr/bin/codestyle
-RUN chmod +x /usr/bin/codestyle
 RUN codestyle --version
-
-# Install Laravel Pint
-RUN curl -sLS https://github.com/laravel/pint/releases/latest/download/pint.phar \
-    --output /usr/bin/pint
-RUN chmod +x /usr/bin/pint
 RUN pint --version
 
 # Cleanup dev dependencies
