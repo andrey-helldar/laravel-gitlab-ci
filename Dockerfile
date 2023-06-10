@@ -117,6 +117,9 @@ RUN composer global require \
     laravel/pint
 
 # Get the versions
+RUN echo "###########################################################################"
+RUN echo "# Composer package versions"
+RUN echo "###########################################################################"
 RUN composer --version
 RUN dep --version
 RUN codestyle --version
