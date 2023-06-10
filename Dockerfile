@@ -106,8 +106,10 @@ RUN docker-php-ext-install \
 
 # Install Composer
 ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/vendor/bin:/composer/vendor/bin:$HOME/.composer/vendor/bin:/var/www/vendor/bin:$HOME/.local/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
+
+ENV PATH $HOME/.composer/vendor/bin:~/.composer/vendor/bin:./vendor/bin:/vendor/bin:/composer/vendor/bin:$HOME/.composer/vendor/bin:/var/www/vendor/bin:$HOME/.local/composer/vendor/bin:$PATH
+
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Install Composer's dependencies
@@ -117,9 +119,6 @@ RUN composer global require \
     laravel/pint
 
 # Get the versions
-RUN echo "###########################################################################"
-RUN echo "# Composer package versions"
-RUN echo "###########################################################################"
 RUN composer --version
 RUN dep --version
 RUN codestyle --version
