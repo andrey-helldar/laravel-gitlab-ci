@@ -101,7 +101,9 @@ RUN docker-php-ext-install \
     xml \
     zip
 
+###########################################################################
 # Install Composer
+###########################################################################
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
@@ -109,23 +111,33 @@ ENV PATH $HOME/.composer/vendor/bin:~/.composer/vendor/bin:./vendor/bin:/vendor/
 
 RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-# Install Composer's dependencies
+###########################################################################
+# Install Composer & Node Dependencies
+###########################################################################
 RUN composer global require \
     deployer/deployer \
     dragon-code/codestyler \
     laravel/pint
 
-# Get the versions
+RUN npm install -g npm \
+    npm install -g pnpm \
+    npm install -g bun
+
+###########################################################################
+# Show Versions
+###########################################################################
 RUN composer --version
 RUN dep --version
 RUN codestyle --version
 RUN pint --version
 
-# Cleanup dev dependencies
-RUN apk del -f .build-deps
-
-# Show PHP version
 RUN php -v
+RUN node -v
+
+###########################################################################
+# Clean Up
+###########################################################################
+RUN apk del -f .build-deps
 
 # Setup working directory
 WORKDIR /var/www
