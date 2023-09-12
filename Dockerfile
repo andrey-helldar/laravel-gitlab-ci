@@ -80,7 +80,6 @@ RUN docker-php-ext-enable \
 ###########################################################################
 # Configure
 ###########################################################################
-
 RUN docker-php-ext-configure zip
 
 RUN docker-php-ext-install \
@@ -119,9 +118,7 @@ RUN composer global require \
     dragon-code/codestyler \
     laravel/pint
 
-RUN npm install -g npm \
-    npm install -g pnpm \
-    npm install -g bun
+RUN curl -fsSL https://bun.sh/install | bash
 
 ###########################################################################
 # Show Versions
