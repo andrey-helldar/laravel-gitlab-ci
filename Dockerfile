@@ -64,7 +64,7 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN if [[ $SHORT_PHP_VERSION = "8.3" || $SHORT_PHP_VERSION = "lat" ]]; then \
+RUN if [[ $SHORT_PHP_VERSION = "8.3" || $FULL_PHP_VERSION = "alpine" ]]; then \
         pecl install redis && \
         docker-php-ext-enable redis \
     ;else \
