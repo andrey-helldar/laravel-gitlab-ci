@@ -1,11 +1,11 @@
-ARG FULL_PHP_VERSION=8.2-alpine
+ARG FULL_PHP_VERSION=8.3-alpine
 
 FROM php:${FULL_PHP_VERSION}
 
 LABEL maintainer="Andrey Helldar"
 
 ARG FULL_PHP_VERSION=alpine
-ARG SHORT_PHP_VERSION=8.2
+ARG SHORT_PHP_VERSION=8.3
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -64,18 +64,13 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN pecl install \
-    imagick \
-    redis \
-    xdebug
-
-###########################################################################
-# Install and enable php extensions
-###########################################################################
-RUN docker-php-ext-enable \
-    imagick \
-    redis \
-    xdebug
+RUN if [ $SHORT_PHP_VERSION = "8.3" ]; then \
+        pecl install redis && \
+        docker-php-ext-enable redis \
+    ;else \
+        pecl install imagick redis xdebug && \
+        docker-php-ext-enable imagick redis xdebug \
+    ;fi
 
 ###########################################################################
 # Configure
