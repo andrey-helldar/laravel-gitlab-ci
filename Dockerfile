@@ -83,6 +83,7 @@ RUN docker-php-ext-install \
     curl \
     dom \
     exif \
+    ftp \
     gd \
     mbstring \
     opcache \
