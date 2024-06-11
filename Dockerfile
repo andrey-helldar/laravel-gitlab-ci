@@ -62,10 +62,27 @@ RUN apk add --no-cache \
 RUN pecl channel-update pecl.php.net
 
 ###########################################################################
+# Install Imagick
+###########################################################################
+
+RUN apk add git --update --no-cache && \
+    git clone https://github.com/Imagick/imagick.git --depth 1 /tmp/imagick && \
+    cd /tmp/imagick && \
+    git fetch origin master && \
+    git switch master && \
+    cd /tmp/imagick && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install && \
+    apk del git && \
+    docker-php-ext-enable imagick
+
+###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN pecl install imagick redis xdebug && \
-    docker-php-ext-enable imagick redis xdebug
+RUN pecl install redis xdebug && \
+    docker-php-ext-enable redis xdebug
 
 ###########################################################################
 # Configure
