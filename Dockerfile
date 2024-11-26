@@ -83,8 +83,13 @@ RUN if [ $PHP_VERSION != "8.4" ]; then \
 ###########################################################################
 # Install PECL and PEAR extensions
 ###########################################################################
-RUN pecl install redis xdebug && \
-    docker-php-ext-enable redis xdebug
+RUN pecl install redis && \
+    docker-php-ext-enable redis
+
+RUN if [ $PHP_VERSION = "7.4" ]; then \
+        pecl install xdebug && \
+        docker-php-ext-enable xdebug
+    ;fi
 
 ###########################################################################
 # Configure
