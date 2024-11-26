@@ -65,7 +65,8 @@ RUN pecl channel-update pecl.php.net
 # Install Imagick
 ###########################################################################
 
-RUN apk add git --update --no-cache && \
+RUN if [ $PHP_VERSION != "8.4" ]; then \
+    apk add git --update --no-cache && \
     git clone https://github.com/Imagick/imagick.git --depth 1 /tmp/imagick && \
     cd /tmp/imagick && \
     git fetch origin master && \
@@ -76,7 +77,8 @@ RUN apk add git --update --no-cache && \
     make && \
     make install && \
     apk del git && \
-    docker-php-ext-enable imagick
+    docker-php-ext-enable imagick \
+    ;fi
 
 ###########################################################################
 # Install PECL and PEAR extensions
