@@ -86,7 +86,7 @@ RUN if [ $PHP_VERSION != "8.4" ]; then \
 RUN pecl install redis && \
     docker-php-ext-enable redis
 
-RUN if [ $PHP_VERSION = "7.4" ]; then \
+RUN if [ $PHP_VERSION != "8.4" ]; then \
         pecl install xdebug && \
         docker-php-ext-enable xdebug \
     ;fi
