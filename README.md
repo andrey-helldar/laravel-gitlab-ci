@@ -13,7 +13,7 @@
 
 ## Supported tags and respective `Dockerfile` links
 
->  ATTENTION
+>  **ATTENTION**
 >
 > The latest supported version of PHP is 8.4.
 >
@@ -36,4 +36,3 @@
 | `8.1.x`, `8.0.x`, `7.4.x`                | stable patch, where `x` is the [PHP version number](https://www.php.net/downloads)   |
 | `edge-8.1`, `edge-8.0`, `edge-7.4`       | unstable                                                                             |
 | `edge-8.0.x`, `edge-8.0.x`, `edge-7.4.x` | unstable patch, where `x` is the [PHP version number](https://www.php.net/downloads) |
-
