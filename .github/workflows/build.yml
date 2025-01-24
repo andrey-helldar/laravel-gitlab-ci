@@ -47,12 +47,6 @@ jobs:
                         SUFFIX=""
                     fi
 
-                    if [[ $GITHUB_REF == refs/tags/* && ${VERSION:5:5} != "alpha" && ${VERSION:5:4} != "beta" && ${VERSION:5:2} != "rc" ]]; then
-                        PREFIX=""
-                        LATEST_TAG=stable
-                        LATEST_TAGS="${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:stable"
-                    fi
-
                     echo "prefix=${PREFIX}" >> "$GITHUB_OUTPUT"
                     echo "suffix=${SUFFIX}" >> "$GITHUB_OUTPUT"
                     echo "minor_version=${VERSION:0:3}" >> "$GITHUB_OUTPUT"

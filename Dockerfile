@@ -65,7 +65,7 @@ RUN pecl channel-update pecl.php.net
 # Install Imagick
 ###########################################################################
 
-RUN if [ $SHORT_PHP_VERSION != 8.4 ]; then \
+RUN if [ $SHORT_PHP_VERSION != 8.4 && $SHORT_PHP_VERSION != "alpine" ]; then \
     apk add git --update --no-cache && \
     git clone https://github.com/Imagick/imagick.git --depth 1 /tmp/imagick && \
     cd /tmp/imagick && \
@@ -86,7 +86,7 @@ RUN if [ $SHORT_PHP_VERSION != 8.4 ]; then \
 RUN pecl install redis && \
     docker-php-ext-enable redis
 
-RUN if [ $SHORT_PHP_VERSION != 8.4 ]; then \
+RUN if [ $SHORT_PHP_VERSION != 8.4 && $SHORT_PHP_VERSION != "alpine" ]; then \
         pecl install xdebug && \
         docker-php-ext-enable xdebug \
     ;fi

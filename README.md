@@ -13,11 +13,13 @@
 
 ## Supported tags and respective `Dockerfile` links
 
->  **ATTENTION**
+>  [!NOTE]
 >
 > The latest supported version of PHP is 8.4.
 >
 > We will support it for the duration, but there will be no newer versions of PHP.
+> 
+> Also, the Imagick extension is not available for PHP 8.4 due to [lack of support](https://github.com/Imagick/imagick).
 
 | Tags                                         | Stability                                                                            |
 |:---------------------------------------------|:-------------------------------------------------------------------------------------|
