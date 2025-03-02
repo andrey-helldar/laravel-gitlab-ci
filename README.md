@@ -2,13 +2,14 @@
 
 <img src="https://preview.dragon-code.pro/andrey-helldar/deploy-container.svg?brand=gitlab&mode=dark" alt="Laravel Gitlab CI"/>
 
+[![Docker Badge](https://img.shields.io/docker/pulls/helldar/laravel-gitlab-ci)](https://hub.docker.com/r/helldar/laravel-gitlab-ci/)
+[![Docker Build](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml/badge.svg)](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml)
+
 > [!NOTE]
 > It is not recommended to use this container in production. Only for development and deployment.
 >
 > The configuration file for GitLab can be found [here](.gitlab-ci.yml).
 
-[![Docker Badge](https://img.shields.io/docker/pulls/helldar/laravel-gitlab-ci)](https://hub.docker.com/r/helldar/laravel-gitlab-ci/)
-[![Docker Build](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml/badge.svg)](https://github.com/andrey-helldar/laravel-gitlab-ci/actions/workflows/build.yml)
 
 ## Supported tags and respective `Dockerfile` links
 
