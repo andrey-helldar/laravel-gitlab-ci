@@ -1,9 +1,8 @@
-# Deploying Docker container (with Gitlab CI and other)
+# 🐳 Deploying Docker container (with Gitlab CI and other)
 
 <img src="https://preview.dragon-code.pro/andrey-helldar/deploy-container.svg?brand=gitlab&mode=dark" alt="Laravel Gitlab CI"/>
 
-> 🐳 Generic docker image for Laravel Applications
->
+> [!NOTE]
 > It is not recommended to use this container in production. Only for development and deployment.
 >
 > The configuration file for GitLab can be found [here](.gitlab-ci.yml).
@@ -17,7 +16,7 @@
 >
 > The latest supported version of PHP is 8.4.
 >
-> We will support it for the duration, but there will be no newer versions of PHP.
+> We will support the current versions of PHP (8.2, 8.3, and 8.4) until PHP 8.4 [support ends](https://www.php.net/supported-versions.php) on January 1, 2027.
 > 
 > Also, the Imagick extension is not available for PHP 8.4 due to [lack of support](https://github.com/Imagick/imagick).
 
