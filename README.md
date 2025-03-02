@@ -1,4 +1,4 @@
-# 🐳 Deploying Docker container (with Gitlab CI and other)
+# 🐳 Deploying Docker container
 
 <img src="https://preview.dragon-code.pro/andrey-helldar/deploy-container.svg?brand=gitlab&mode=dark" alt="Laravel Gitlab CI"/>
 
