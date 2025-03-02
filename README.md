@@ -13,7 +13,7 @@
 
 ## Supported tags and respective `Dockerfile` links
 
->  [!NOTE]
+>  [!WARNING]
 >
 > The latest supported version of PHP is 8.4.
 >
