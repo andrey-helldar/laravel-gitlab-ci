@@ -1,0 +1,33 @@
+name: Update license
+
+on:
+  schedule:
+    - cron: '0 3 1 1 *'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  License:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: FantasticFiasco/action-update-license-year@v3
+        id: license
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commitTitle: 'The year in the LICENSE file has been updated'
+          prTitle: 'The year in the LICENSE file has been updated'
+      - name: Merge PR
+        if: steps.license.outputs.pullRequestNumber != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --merge --delete-branch ${{ steps.license.outputs.pullRequestNumber }}
