@@ -66,7 +66,7 @@ RUN pecl channel-update pecl.php.net
 ###########################################################################
 
 RUN pecl install imagick && \
-    docker-php-ext-enable redis
+    docker-php-ext-enable imagick
 
 ###########################################################################
 # Install PECL and PEAR extensions
