@@ -18,8 +18,6 @@
 > The latest supported version of PHP is 8.4.
 >
 > We will support the current versions of PHP (8.2, 8.3, and 8.4) until PHP 8.4 [support ends](https://www.php.net/supported-versions.php) on January 1, 2027.
-> 
-> Also, the Imagick extension is not available for PHP 8.4 due to [lack of support](https://github.com/Imagick/imagick).
 
 | Tags                                         | Stability                                                                            |
 |:---------------------------------------------|:-------------------------------------------------------------------------------------|
