@@ -17,7 +17,10 @@
 >
 > The latest supported version of PHP is 8.4.
 >
-> We will support the current versions of PHP (8.2, 8.3, and 8.4) until PHP 8.4 [support ends](https://www.php.net/supported-versions.php) on January 1, 2027.
+> Currently [supported versions](https://www.php.net/supported-versions.php):
+> - PHP 8.2 until 31 Dec 2025
+> - PHP 8.3 until 31 Dec 2025
+> - PHP 8.4 until 31 Dec 2026
 
 | Tags                                         | Stability                                                                            |
 |:---------------------------------------------|:-------------------------------------------------------------------------------------|
