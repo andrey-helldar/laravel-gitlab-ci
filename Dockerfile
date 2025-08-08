@@ -118,7 +118,7 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
 ###########################################################################
 RUN composer global require \
     deployer/deployer \
-    dragon-code/codestyler \
+    dragon-code/codestyler:^5.5 \
     laravel/pint
 
 RUN curl -fsSL https://bun.sh/install | bash
